@@ -2,7 +2,7 @@ from ast import Return
 from re import A
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
-from .models import Autor
+from .models import Autor, Book
 # Create your views here.
 
 def index(request):
@@ -10,5 +10,10 @@ def index(request):
 
 def listarAutores(request):
     lista = Autor.objects.all()
+    output = ', '.join([a.nombres for a in lista])
+    return HttpResponse(output) 
+
+def listarBooks(request):
+    lista = Book.objects.all()
     output = ', '.join([a.nombres for a in lista])
     return HttpResponse(output) 
