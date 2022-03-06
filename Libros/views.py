@@ -10,5 +10,5 @@ def index(request):
 
 def listarAutores(request):
     lista = Autor.objects.all()
-    output = ', '.join([A.nombres for q in lista])
-    return HttpResponse(output)
+    output = ', '.join([a.nombres for a in lista])
+    return HttpResponse(output) 
