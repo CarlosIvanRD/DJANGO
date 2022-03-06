@@ -13,11 +13,13 @@ def index(request):
     context = {}
     return HttpResponse(template.render(context,request))
 
+#Vista para listar autores
 def listarAutores(request):
     lista = Autor.objects.all()
     output = ', '.join([a.nombres for a in lista])
     return HttpResponse(output) 
 
+#vista para crear autores.
 def create_autor(request):
 
     context = {}
@@ -29,6 +31,15 @@ def create_autor(request):
     
     context['form'] = form
     return render(request,'autores/create_autor.html', context)
+
+#Vista para ver detalles de un autor
+def detail_view(request, id):
+    context = {}
+
+    context['object'] = Autor.objects.get(id = id)
+
+    return render(request,'autores/autor_detalle.html',context)
+
 
 def listarBooks(request):
     lista = Book.objects.all()
