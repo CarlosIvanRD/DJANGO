@@ -9,7 +9,7 @@ from .forms import AuthorForm
 # Create your views here.
 
 def index(request):
-    template = loader.get_template('libros/index.html')
+    template = loader.get_template('autores/index.html')
     context = {}
     return HttpResponse(template.render(context,request))
 
@@ -39,6 +39,38 @@ def detail_view(request, id):
     context['object'] = Autor.objects.get(id = id)
 
     return render(request,'autores/autor_detalle.html',context)
+
+#vista para actualizar autores
+#Referencia https://www.geeksforgeeks.org/django-crud-create-retrieve-update-delete-function-based-views/?ref=lbp
+def update_autor(request,id):
+
+    context = {}
+
+    obj = get_object_or_404(Autor, id = id)
+
+    #formulario que contendra la instancia
+    form = AuthorForm(request.POST or None, instance = obj)
+
+    if form.is_valid():
+        form.save()
+        return redirect('autores')
+    
+    context['form'] = form
+
+    return render(request, "autores/update_view.html", context)
+
+#Vista para eliminar un autor
+def delete_view(request, id):
+
+    context = {}
+
+    obj = get_object_or_404(Autor, id = id)
+
+    if request.method == "POST":
+        obj.delete()
+        return redirect('autores')
+    
+    return render(request, "autores/delete_view.html", context)
 
 
 def listarBooks(request):

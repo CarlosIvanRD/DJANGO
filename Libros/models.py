@@ -6,6 +6,9 @@ class Autor(models.Model):
     apellidos = models.CharField(max_length=100)
     birth_date = models.DateField()
 
+def get_name(self):
+        return self.nombres + " " + self.apellidos
+
 class Book(models.Model):
     nombre = models.CharField(max_length=100)
     description = models.CharField(max_length=1000)
